@@ -1,0 +1,9 @@
+jdk:
+  - openjdk11
+
+script:
+  - git clone https://github.com/georgewfraser/java-language-server
+  - cd java-language-server
+  - mvn package -DskipTests
+  - JAVAC_SERVICES_VERSION=$(mvn help:evaluate -Dexpression=project.version -DforceStdout -q)
+  - curl -T target/javac-services-$JAVAC_SERVICES_VERSION.jar -uiwataka:$BINTRAY_API_KEY https://api.bintray.com/content/iwataka/generic/java-language-server/$JAVAC_SERVICES_VERSION-v/javac-services.jar
